@@ -14,7 +14,7 @@ export default function Layout() {
           <Link to="/">About</Link>
         </li>
         <li>
-          <Link to="/">Blog</Link>
+          <Link to="/test">Test</Link>
         </li>
         <li>
           <Link to="/">Blog</Link>
