@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "antd": "^5.3.2",
-    "react-infinite-scroll-component": "^6.1.0",
     "react-grid-gallery": "^1.0.0",
+    "react-image-lightbox": "^5.1.4",
+    "react-infinite-scroll-component": "^6.1.0",
     "umi": "^4.0.61"
   },
   "devDependencies": {
