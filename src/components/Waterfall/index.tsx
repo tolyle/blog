@@ -2,28 +2,16 @@ import { Row, Col, Divider, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Gallery } from 'react-grid-gallery';
-import { queryItems } from '@/services/item';
 import sty from './index.css';
-import Lightbox from 'react-image-lightbox';
 import { Image } from 'react-grid-gallery';
 
-export default () => {
+export default (photoData: any) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [data, setData] = useState([] as any[]);
 
-  const [index, setIndex] = useState(-1);
-
-  const currentImage = data[index];
-  const nextIndex = (index + 1) % data.length;
-  const nextImage = data[nextIndex] || currentImage;
-  const prevIndex = (index + data.length - 1) % data.length;
-  const prevImage = data[prevIndex] || currentImage;
-
   const loadMoreData = () => {
-    console.log('loading = ', loading);
-    console.log('hasMore = ', hasMore);
     if (hasMore == false) {
       return;
     }
@@ -31,9 +19,8 @@ export default () => {
       return;
     }
     setLoading(true);
-    console.log(1111);
-    queryItems(page)
-      .then((res) => {
+    photoData
+      .then((res: any[]) => {
         res.forEach((element: any) => {
           element.src = element.url;
           element.customOverlay = (
@@ -58,17 +45,15 @@ export default () => {
           );
         });
 
-        setTimeout(() => {
-          setLoading(false);
-          setData([...data, ...res]);
-          if (res.length == 0) {
-            setHasMore(false);
-          } else {
-            setPage(page + 1);
-          }
-        }, 1000);
+        setLoading(false);
+        setData([...data, ...res]);
+        if (res.length == 0) {
+          setHasMore(false);
+        } else {
+          setPage(page + 1);
+        }
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log('err = ', err);
       });
   };
@@ -76,16 +61,7 @@ export default () => {
     loadMoreData();
   }, []);
 
-  console.log(data);
-
-  const handleClick = (index: number, item: Image) => {
-    console.log('...............................' + index);
-    setIndex(index);
-  };
-
-  const handleClose = () => setIndex(-1);
-  const handleMovePrev = () => setIndex(prevIndex);
-  const handleMoveNext = () => setIndex(nextIndex);
+  const handleClick = (index: number, item: Image) => {};
 
   const slides = data.map(({ src, width, height }) => ({
     src: src,
@@ -115,21 +91,6 @@ export default () => {
       >
         <div className={sty.rowBox}>
           <Gallery rowHeight={450} margin={12} enableImageSelection={false} images={data} onClick={handleClick} />
-          {!!currentImage && (
-            /* @ts-ignore */
-            <Lightbox
-              mainSrc={currentImage.url}
-              imageTitle={currentImage.caption}
-              mainSrcThumbnail={currentImage.url}
-              nextSrc={nextImage.original}
-              nextSrcThumbnail={nextImage.url}
-              prevSrc={prevImage.original}
-              prevSrcThumbnail={prevImage.url}
-              onCloseRequest={handleClose}
-              onMovePrevRequest={handleMovePrev}
-              onMoveNextRequest={handleMoveNext}
-            />
-          )}
         </div>
       </InfiniteScroll>
     </div>
