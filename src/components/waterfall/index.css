@@ -1,0 +1,15 @@
+.box {
+  padding: 50px 0;
+  box-sizing: border-box;
+}
+.rowBox {
+  width: 80%;
+  margin: auto;
+}
+.col {
+  display: flex;
+  justify-content: center;
+}
+.colImg {
+  width: 100%;
+}
