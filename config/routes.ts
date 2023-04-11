@@ -1,6 +1,6 @@
 export default [
   { path: '/', component: 'index' },
-  { path: '/photos', component: 'Photo/index' },
+  { path: '/photos', component: 'photo/index' },
   // {
   //   path: '/admin/home',
   //   name: '首页',
