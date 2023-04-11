@@ -1,4 +1,4 @@
-import notification from 'ant-design-vue/es/notification';
+import { notification } from 'antd';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',

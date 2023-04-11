@@ -1,13 +1,14 @@
 import waterfall from '@/components/waterfall/index';
 import { queryItems } from '@/services/item';
 import { useEffect, useState } from 'react';
-import notification from 'ant-design-vue/es/notification';
-import 'ant-design-vue/dist/antd.css';
+import { notification } from 'antd';
+
+import request from 'umi-request';
 
 export default () => {
   const [page, setPage] = useState(1);
 
-  console.log(page);
+  console.log('www');
 
   // notification.config({
   //   placement: 'bottomRight',
@@ -15,6 +16,15 @@ export default () => {
   //   duration: 3,
   //   rtl: true,
   // });
+
+  request
+    .get('http://www.baidu.com')
+    .then(function (response: any) {
+      console.log(response);
+    })
+    .catch(function (error: any) {
+      console.log(error);
+    });
 
   notification.open({
     message: 'Notification Title',
