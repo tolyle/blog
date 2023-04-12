@@ -3,7 +3,7 @@ import { queryItems } from '@/services/item';
 import { useEffect, useState } from 'react';
 import { notification } from 'antd';
 
-import request from 'umi-request';
+import request from '../lib/request';
 
 export default () => {
   const [page, setPage] = useState(1);
@@ -18,21 +18,25 @@ export default () => {
   // });
 
   request
-    .get('http://www.baidu.com')
+    .get('getUser')
     .then(function (response: any) {
+      console.log('response');
+
       console.log(response);
     })
     .catch(function (error: any) {
+      console.log('error');
+
       console.log(error);
     });
 
-  notification.open({
-    message: 'Notification Title',
-    description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-    onClick: () => {
-      console.log('Notification Clicked!');
-    },
-  });
+  // notification.open({
+  //   message: 'Notification Title',
+  //   description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+  //   onClick: () => {
+  //     console.log('Notification Clicked!');
+  //   },
+  // });
 
   const photoData = queryItems(page);
   const view = waterfall(photoData);

@@ -1,22 +1,19 @@
-import { Settings as ProSettings } from '@ant-design/pro-layout';
-
-type DefaultSettings = Partial<ProSettings> & {
-  pwa: boolean;
-};
-
-const proSettings: DefaultSettings = {
-  navTheme: 'realDark',
+const Settings = {
+  navTheme: 'dark',
   // 拂晓蓝
-  layout: 'side',
+  primaryColor: '#1890ff',
+  layout: 'mix',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '商城后台',
+  // 不再使用 locales/zh-CN/menu.js
+  menu: {
+    locale: false,
+  },
+  title: 'OnePiece社区后台',
   pwa: false,
+  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
 };
-
-export type { DefaultSettings };
-
-export default proSettings;
+export default Settings;
