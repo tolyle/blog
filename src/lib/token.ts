@@ -1,16 +1,25 @@
-//创建获取token
-
 import { IToken } from './interface';
 import sc from '../../config/sys';
 
-//因为token存储的是对象，此处默认值也是对象'{}'
-export const getToken = (): IToken => JSON.parse(localStorage.getItem(sc.TOKEN_KEY) ?? '{"token":"","refresh_token":""}');
+/**
+ * token常用方法
+ */
 
-// 创建设置token
+/**
+ * 获取token
+ * @returns IToken
+ */
+export const getToken = (): IToken => JSON.parse(localStorage.getItem(sc.TOKEN_KEY) ?? '{"token":""}');
+
+/**
+ *
+ * @param token 创建token
+ * @returns
+ */
 export const setToken = (token: IToken) => localStorage.setItem(sc.TOKEN_KEY, JSON.stringify(token));
 
-//创建 清楚 token
+/**
+ *
+ * @returns 清空token
+ */
 export const clearToken = () => localStorage.removeItem(sc.TOKEN_KEY);
-
-//是否登陆
-export const isAuth = () => !!getToken().token;

@@ -4,11 +4,19 @@ import { useEffect, useState } from 'react';
 import { notification } from 'antd';
 
 import request from '../lib/request';
+import { setToken } from '@/lib/token';
+import { IToken } from '@/lib/interface';
 
 export default () => {
   const [page, setPage] = useState(1);
 
-  console.log('www');
+  const tk: IToken = {
+    token: 'asdfasdfasdfasdfasdf',
+    id: 23,
+    clentIp: '127.0.0.1',
+    lastUpdate: new Date(),
+  };
+  setToken(tk);
 
   // notification.config({
   //   placement: 'bottomRight',

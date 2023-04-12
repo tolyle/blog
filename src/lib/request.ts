@@ -4,7 +4,13 @@ import { IKeyValue } from './interface';
 import { extend } from 'umi-request';
 import sc from '../../config/sys';
 import { getToken } from '../lib/token';
+import { clearToken } from '../lib/token';
 
+/**
+ * 对umi-request进行二次封装，主要方便以下二点
+ * 1、对request请求封装携带token
+ * 2、统一错误处理机制
+ */
 const returnCodeMessage: IKeyValue = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -22,8 +28,11 @@ const returnCodeMessage: IKeyValue = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
 /**
- * 异常处理程序
+ * 请求服务器时统一错误处理
+ * @param error Response
+ * @returns
  */
 const errorHandler = (error: Response | any) => {
   const response = error;
@@ -50,7 +59,7 @@ const errorHandler = (error: Response | any) => {
       notification.warning({
         message: '请重新登陆!',
       });
-      //clearTokens();
+      clearToken();
       history.push('/gp/login');
     } else {
       notification.error({
@@ -70,7 +79,7 @@ const errorHandler = (error: Response | any) => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  prefix: '/api', // 路径前缀
+  prefix: sc.API_PREFIX, // 路径前缀
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
   timeout: sc.HTTP_TIME_OUT,
