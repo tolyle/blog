@@ -25,19 +25,6 @@ export default () => {
   //   rtl: true,
   // });
 
-  request
-    .get('getUser')
-    .then(function (response: any) {
-      console.log('response');
-
-      console.log(response);
-    })
-    .catch(function (error: any) {
-      console.log('error');
-
-      console.log(error);
-    });
-
   // notification.open({
   //   message: 'Notification Title',
   //   description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',

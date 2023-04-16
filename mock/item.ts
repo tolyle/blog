@@ -137,9 +137,9 @@ export default {
   // 返回值可以是数组形式
   'GET /api/items': (req: any, res: any) => {
     let page = req.query.page;
-    if(page == 5){
-      res.json([])
-      return 
+    if (page == 5) {
+      res.json([]);
+      return;
     }
     let arr = [];
     for (let i = 0; i < 15; i++) {

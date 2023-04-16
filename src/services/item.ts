@@ -1,5 +1,8 @@
+import request from '@/lib/request';
+import sys from '../../config/sys';
+
 export async function queryItems(page: number) {
-  return fetch(`/api/items?page=${page}`).then((res) => {
-    return res.json();
+  return request.get(`/items?page=${page}`).then((data) => {
+    return data;
   });
 }
