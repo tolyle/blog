@@ -4,7 +4,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Gallery } from 'react-grid-gallery';
 import sty from './index.css';
 import { Image } from 'react-grid-gallery';
+import PhotoAlbum from "react-photo-album";
 
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 export default (photoData: any) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -68,7 +76,7 @@ export default (photoData: any) => {
     width,
     height,
   }));
-
+  const [index, setIndex] = useState(-1);
   return (
     <div className={sty.box}>
       <InfiniteScroll
@@ -89,10 +97,17 @@ export default (photoData: any) => {
         endMessage={<Divider plain>已经是全部了, 没有更多啦 🤐</Divider>}
         scrollableTarget="scrollableDiv"
       >
-        <div className={sty.rowBox}>
-          <Gallery rowHeight={450} margin={12} enableImageSelection={false} images={data} onClick={handleClick} />
-        </div>
+        <PhotoAlbum photos={slides} layout="columns" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
       </InfiniteScroll>
+
+      <Lightbox
+    slides={slides}
+    open={index >= 0}
+    index={index}
+    close={() => setIndex(-1)}
+    // enable optional lightbox plugins
+    plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+/>
     </div>
   );
 };
