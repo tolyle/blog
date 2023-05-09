@@ -1,0 +1,6 @@
+.box {
+  padding: 50px 0;
+  box-sizing: border-box;
+  width: 80%;
+  margin: auto;
+}

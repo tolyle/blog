@@ -1,0 +1,18 @@
+.box {
+  padding: 50px 0;
+  box-sizing: border-box;
+  width: 80%;
+  margin: auto;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.tipColor {
+  color: #1677ff;
+}
+.fontBold {
+  font-weight: bold;
+}

@@ -11,5 +11,5 @@ export default {
   /**
    * 幻灯片播放音乐
    */
-  SLIDESHOW_MUSIC: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  SLIDESHOW_MUSIC: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3',
 };

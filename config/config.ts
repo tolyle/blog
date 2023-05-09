@@ -11,4 +11,15 @@ export default defineConfig({
   antd: {
     dark: false,
   },
+  proxy: {
+    '/api': {
+      // 接口根路径
+      target: 'http://tolyle.com', // 接口服务器域名
+      changeOrigin: true, // 开启跨域
+      pathRewrite: {
+        // 路径重写规则
+        '^/api': '', // 将 /api 替换为空字符串
+      },
+    },
+  },
 });

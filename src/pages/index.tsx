@@ -1,15 +1,9 @@
 import waterfall from '@/components/waterfall/index';
-import { queryItems } from '@/services/item';
-import { useEffect, useState } from 'react';
-import { notification } from 'antd';
 
-import request from '../lib/request';
 import { setToken } from '@/lib/token';
 import { IToken } from '@/lib/interface';
 
 export default () => {
-  const [page, setPage] = useState(1);
-
   const tk: IToken = {
     token: 'asdfasdfasdfasdfasdf',
     id: 23,
@@ -33,8 +27,7 @@ export default () => {
   //   },
   // });
 
-  const photoData = queryItems(page);
-  const view = waterfall(photoData);
+  const view = waterfall();
 
   return view;
 };
