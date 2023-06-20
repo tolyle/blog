@@ -3,7 +3,7 @@ export default {
   /**
    * HTTP请求超时时间
    */
-  HTTP_TIME_OUT: 6000,
+  HTTP_TIME_OUT: 600000,
   /**
    * 后端服务器请求前缀
    */
@@ -11,5 +11,7 @@ export default {
   /**
    * 幻灯片播放音乐
    */
-  SLIDESHOW_MUSIC: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  // SLIDESHOW_MUSIC: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+
+  SLIDESHOW_MUSIC: '',
 };

@@ -1,22 +1,23 @@
-import { Button, Input, Tag, Space } from 'antd';
+import { Button, Input, Tag, Space, Form } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
-import type { UploadProps } from 'antd';
 import css from './index.css';
-import { PlusOutlined } from '@ant-design/icons';
-import { InboxOutlined } from '@ant-design/icons';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
-import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import request from '@/lib/request';
+
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+
+import { savePhoto } from '@/services/admin';
 
 const { Dragger } = Upload;
 
 export default () => {
   const { CheckableTag } = Tag;
 
-  const tagsData = ['Movies', 'Books', 'Music', 'Sports'];
-  const [selectedTags, setSelectedTags] = useState<string[]>(['Books']);
-  const [inputVisible, setInputVisible] = useState(false);
+  const tagsData = ['人物', '风景', '扫街', '瞎拍'];
+
+  const [selectedTags, setSelectedTags] = useState('');
   const inputRef = useRef<InputRef>(null);
   const editInputRef = useRef<InputRef>(null);
   const [inputValue, setInputValue] = useState('');
@@ -25,74 +26,52 @@ export default () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
 
-  const props2: UploadProps = {
+  const [formInstance] = Form.useForm();
+
+  const props: UploadProps = {
+    multiple: true,
     onRemove: (file) => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
+    beforeUpload: (file, fileList1) => {
+      console.log('选中的图片数量:' + fileList1.length);
+      setFileList([...fileList, ...fileList1]);
 
       return false;
     },
     fileList,
   };
 
-  const props: UploadProps = {
-    name: 'file',
-    multiple: true,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    onDrop(e) {
-      console.log('Dropped files', e.dataTransfer.files);
-    },
-    beforeUpload: (file) => {
-      return false;
-    },
-  };
-
   const handleUpload = () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append('files', file as RcFile);
-    });
-    formData.append('title', '这只是一个标题');
-    formData.append('tags', '只是一个标签');
+    console.log('要上传的文件数量' + fileList.length);
 
-    request.post('/api/upload', {
-      data: formData,
-      requestType: 'form',
-    });
+    //表单元素都通过验证后
+    formInstance.validateFields().then((values) => {
+      const formData = new FormData();
 
-    setUploading(true);
-    // You can use any AJAX library you like
-    // fetch('/api/upload', {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then((res) => res.json())
-    //   .then(() => {
-    //     setFileList([]);
-    //     message.success('upload successfully.');
-    //   })
-    //   .catch(() => {
-    //     message.error('upload failed.');
-    //   })
-    //   .finally(() => {
-    //     setUploading(false);
-    //   });
+      fileList.forEach((file) => {
+        formData.append('files', file as RcFile);
+      });
+
+      formData.append('title', values.title);
+      formData.append('city', values.city);
+
+      formData.append('tags', selectedTags);
+      formData.append('spot', values.spot);
+      setUploading(true);
+      savePhoto(formData).then((res) => {
+        if (res.code == 200) {
+          message.success('保存成功');
+          setUploading(false);
+          setFileList([]);
+        } else {
+          message.error(res.statusText);
+        }
+      });
+    });
   };
 
   const handleChange = (tag: string, checked: boolean) => {
@@ -105,18 +84,6 @@ export default () => {
     setInputValue(e.target.value);
   };
 
-  const handleInputConfirm = () => {
-    if (inputValue && tags.indexOf(inputValue) === -1) {
-      setTags([...tags, inputValue]);
-    }
-    setInputVisible(false);
-    setInputValue('');
-  };
-
-  const showInput = () => {
-    setInputVisible(true);
-  };
-
   const tagInputStyle: React.CSSProperties = {
     width: 78,
     verticalAlign: 'top',
@@ -127,44 +94,58 @@ export default () => {
     borderStyle: 'dashed',
   };
 
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+  const [slist2, setSlist2] = useState<String[]>([]);
+
+  const showModal = () => {
+    setSlist2([...slist2, 's' + new Date()]);
+  };
+
+  const showModal1 = () => {
+    console.log(slist2?.length);
+
+    slist2.forEach((s) => {
+      console.log(s);
+    });
+  };
+
   return (
     <div className={css.box}>
-      <p>1This is umi docs.</p>
-      <p>2This is umi docs.</p>
-      <p>3This is umi docs.</p>
-      <p>4This is umi docs.</p>
-      <p>This is umi docs.</p>
-      <p>This is umi docs.</p>
-      <Button type="primary">按钮</Button>
+      <Form name="basic" form={formInstance} labelCol={{ span: 2 }} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+        <Form.Item label="标题" name="title" rules={[{ required: true, message: '标题不能为空' }]}>
+          <Input />
+        </Form.Item>
 
-      <span style={{ marginRight: 8 }}>Categories:</span>
-      <Space size={[0, 8]} wrap>
-        {tagsData.map((tag) => (
-          <CheckableTag key={tag} checked={selectedTags.includes(tag)} onChange={(checked) => handleChange(tag, checked)}>
-            {tag}
-          </CheckableTag>
-        ))}
+        <Form.Item label="拍摄城市" name="city" rules={[{ required: true, message: '拍摄照片所在城市' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="景点" name="spot" rules={[{ required: true, message: '景点名称' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="Tag" name="tag">
+          <div>
+            {tagsData.map((tag) => (
+              <CheckableTag style={{ fontSize: 14 }} key={tag} checked={selectedTags.includes(tag)} onChange={(checked) => handleChange(tag, checked)}>
+                {tag}
+              </CheckableTag>
+            ))}
+          </div>
+        </Form.Item>
 
-        {inputVisible ? (
-          <Input ref={inputRef} type="text" size="small" style={tagInputStyle} value={inputValue} onChange={handleInputChange} onBlur={handleInputConfirm} onPressEnter={handleInputConfirm} />
-        ) : (
-          <Tag style={tagPlusStyle} onClick={showInput}>
-            <PlusOutlined /> New Tag
-          </Tag>
-        )}
-      </Space>
+        <Upload {...props}>
+          <Button icon={<UploadOutlined />}>选择照片</Button>
+        </Upload>
 
-      <Dragger {...props2}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-        <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibited from uploading company data or other banned files.</p>
-      </Dragger>
-
-      <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0} loading={uploading} style={{ marginTop: 16 }}>
-        {uploading ? 'Uploading' : 'Start Upload'}
-      </Button>
+        <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0} loading={uploading} style={{ marginTop: 16 }}>
+          {uploading ? '上传中' : '开始上传'}
+        </Button>
+      </Form>
     </div>
   );
 };

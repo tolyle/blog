@@ -16,6 +16,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-photo-album": "^2.0.4",
     "react-photoswipe-gallery": "^2.2.7",
+    "serve": "^14.2.0",
     "umi": "^4.0.61",
     "umi-request": "^1.4.0",
     "yet-another-react-lightbox": "^3.5.2"
@@ -24,9 +25,12 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@umijs/plugins": "^4.0.63",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "compression-webpack-plugin": "^10.0.0",
     "prettier": "^2",
     "prettier-plugin-organize-imports": "^2",
     "prettier-plugin-packagejson": "^2",
+    "terser-webpack-plugin": "^5.3.9",
     "typescript": "^4.1.2"
   }
 }

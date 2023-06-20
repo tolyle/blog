@@ -1,11 +1,14 @@
 .box {
-  padding: 50px 0;
+  padding: 0 0;
+  margin: 0 0;
   box-sizing: border-box;
+  background-color: #0e232d;
 }
 .rowBox {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
+
 .col {
   display: flex;
   justify-content: center;
@@ -19,6 +22,9 @@
 }
 .lightBoxExif div {
   clear: both;
+}
+.headerRight {
+  display: none;
 }
 .lightBoxExif span {
   display: block;

@@ -14,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Gallery, Image } from 'react-grid-gallery';
 
 import { queryItems } from '@/services/item';
+import { click } from '@/services/admin';
 
 import Lightbox from 'yet-another-react-lightbox';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
@@ -22,6 +23,7 @@ import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import 'yet-another-react-lightbox/plugins/download';
 import { IconButton, createIcon, useLightboxState, isImageSlide } from 'yet-another-react-lightbox/core';
+import request from 'umi-request';
 
 export default () => {
   const [loading, setLoading] = useState(false);
@@ -43,8 +45,9 @@ export default () => {
     setLoading(true);
     photoData
       .then((res: any[]) => {
-        res.forEach((element: any) => {
+        res.data.data.forEach((element: any) => {
           element.src = element.url;
+          element.thumbnailCaption = <span style={{ color: '#cbb878', textAlign: 'center', display: 'block', background: '#0e232d', paddingTop: '20px', paddingBottom: '20px' }}>{element.title}</span>;
           element.customOverlay = (
             <div
               style={{
@@ -53,7 +56,7 @@ export default () => {
                 top: 0,
                 width: '100%',
                 height: '100%',
-                background: 'rgba(0, 0, 0, 0.3)',
+                background: 'rgba(0, 0, 0, 0.6)',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -61,13 +64,18 @@ export default () => {
                 color: 'white',
               }}
             >
-              <div>{element.city}</div>
+              <div>
+                <div style={{ textAlign: `center` }}>
+                  <div>{element.city}</div>
+                  <div style={{ fontSize: 18, marginTop: 15, color: `#b7b7b7` }}>{element.photoTouristSpot}</div>
+                </div>
+              </div>
             </div>
           );
         });
 
         setLoading(false);
-        setData([...data, ...res]);
+        setData([...data, ...res.data.data]);
 
         if (res.length == 0) {
           setHasMore(false);
@@ -85,30 +93,36 @@ export default () => {
   }, []);
 
   const handleClick = (index: number, item: Image) => {};
-  const audio = new Audio();
-  audio.src = sys.SLIDESHOW_MUSIC;
+
+  const handleClick2 = (index: number, item: Image) => {
+    setIndex(index);
+    click(item.id);
+  };
+
+  // const audio = new Audio();
+  // audio.src = sys.SLIDESHOW_MUSIC;
 
   const slides = data.map((obj) => ({
-    src: obj.url,
+    src: obj.srcImgURL,
     fileName: 'test.jpg',
-    title: obj.city,
-    downloadUrl: obj.url,
+    id: obj.id,
+    title: obj.city + ' / ' + obj.photoTouristSpot,
+    downloadUrl: obj.srcImgURL,
     downloadFilename: obj.downloadFilename,
     description: (
       <div className={css.lightBoxExif}>
         <div>
           <span style={{ width: '210px' }}>拍摄时间：{utils.timeFormat(obj.photoTime, 'yyyy-MM-dd hh:mm')}</span>
           <span style={{ width: '160px' }}>分辨率：{obj.resolution}</span>
-          <span style={{ width: '160px' }}>大小：{obj.size}M</span>
-          <span style={{ width: '110px' }}>焦距：{obj.fValue}MM</span>
-          <span style={{ width: '170px' }}>相机品牌：{obj.cameraBrand}</span>
+          <span style={{ width: '110px' }}>大小：{obj.size}M</span>
+          <span style={{ width: '270px' }}>相机品牌：{obj.cameraBrand}</span>
         </div>
         <div>
-          <span style={{ width: '100px' }}>光圈：F{obj.aValue}</span>
+          <span style={{ width: '100px' }}>光圈：F{obj.AValue}</span>
           <span style={{ width: '110px' }}>ISO:{obj.isoValue}</span>
           <span style={{ width: '160px' }}>曝光补偿：{obj.evValue}</span>
-          <span style={{ width: '160px' }}>测光模式：{obj.meteringMode}</span>
-          <span style={{ width: '110px' }}>闪光模式：{obj.flashMode}</span>
+          <span style={{ width: '110px' }}>焦距：{obj.FValue}MM</span>
+          <span style={{ width: '270px' }}>相机镜头：{obj.lens}</span>
         </div>
       </div>
     ),
@@ -120,13 +134,13 @@ export default () => {
 
   function DownloadButton() {
     const { currentSlide } = useLightboxState();
-    console.log('currentSlidecurrentSlidecurrentSlidecurrentSlidecurrentSlidecurrentSlide');
-    console.log(currentSlide);
+
     let downloadUrl = '';
     downloadUrl = currentSlide?.downloadUrl || (currentSlide && isImageSlide(currentSlide) ? currentSlide.src : 'undefined');
     const fileName = currentSlide?.downloadFilename || `${utils.timeStamp()}.${utils.fileExt(downloadUrl)}`;
 
     const handleDownload = () => {
+      //window.location.href = downloadUrl;
       if (downloadUrl) {
         fileDownload(downloadUrl, fileName);
       }
@@ -150,7 +164,7 @@ export default () => {
         scrollableTarget="scrollableDiv"
       >
         <div className={css.rowBox}>
-          <Gallery rowHeight={450} margin={12} enableImageSelection={false} images={data} onClick={(index) => setIndex(index)} />
+          <Gallery rowHeight={600} margin={0} enableImageSelection={false} images={data} onClick={handleClick2} />
 
           {/* <PhotoAlbum photos={slides} layout="columns" columns={31} onClick={({ index }) => setIndex(index)} /> */}
         </div>
@@ -164,10 +178,13 @@ export default () => {
         close={() => setIndex(-1)}
         on={{
           slideshowStart: () => {
-            audio.play();
+            //audio.play();
           },
           slideshowStop: () => {
-            audio.pause();
+            // audio.pause();
+          },
+          view: (showIndex) => {
+            click(slides[showIndex.index].id);
           },
         }}
         // enable optional lightbox plugins

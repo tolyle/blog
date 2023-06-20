@@ -1,7 +1,10 @@
 export default [
   { path: '/', component: 'index' },
-  { path: '/photos', component: 'photo/index' },
-  { path: '/admin/list', component: 'admin/index' },
+  { path: '/photos', component: 'photo/index', title: '后台管理' },
+  { path: '/admin/list', component: 'admin/index', title: '后台管理' },
+  { path: '/about', component: 'about' },
+  { path: '/linkme', component: 'linkme' },
+
   // {
   //   path: '/admin/home',
   //   name: '首页',

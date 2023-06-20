@@ -11,7 +11,7 @@ const Settings = {
   menu: {
     locale: false,
   },
-  title: 'OnePiece社区后台',
+  title: '我的摄影',
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',

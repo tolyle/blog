@@ -3,6 +3,13 @@
   box-sizing: border-box;
   width: 80%;
   margin: auto;
+  background: white;
+}
+body {
+  background: white;
+}
+html {
+  background: white;
 }
 .red {
   color: red;

@@ -72,5 +72,5 @@ export const timeFormatCurrent = (format: any) => {
  * 获取文件扩展名
  */
 export const fileExt = (fileName: string) => {
-  return fileName.substring(fileName.lastIndexOf('.') + 1);
+  return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.lastIndexOf('.') + 1 + 3);
 };
