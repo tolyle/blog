@@ -7,15 +7,16 @@ import webpackPlugin from './plugin';
 const production = process.env.NODE_ENV === 'prod';
 
 export default defineConfig({
+  ...defaultSettings,
   // 打包时移除 console
-  //extraBabelPlugins: [production ? 'transform-remove-console' : ''],
-  extraBabelPlugins: ['transform-remove-console'],
-  chainWebpack: webpackPlugin,
+  extraBabelPlugins: [production ? 'transform-remove-console' : ''],
+  //extraBabelPlugins: ['transform-remove-console'],
+  //chainWebpack: webpackPlugin,
 
-  // chainWebpack(config, { env, webpack }) {
+  chainWebpack(config, { env, webpack }) {
   //   //gzip压缩
-  //   config.plugin('compression-webpack-plugin').use(new CompressionPlugin({ algorithm: 'gzip', test: new RegExp('\\.(js|css)$'), threshold: 10240, minRatio: 0.6, deleteOriginalAssets: true }));
-  // },
+   config.plugin('compression-webpack-plugin').use(new CompressionPlugin({ algorithm: 'gzip', test: new RegExp('\\.(js|css)$'), threshold: 10240, minRatio: 0.6, deleteOriginalAssets: false }));
+  },
   // chainWebpack: ((config: any) => {
   //   config.plugin('compression-webpack-plugin').use(
   //     new CompressionPlugin({
@@ -34,9 +35,7 @@ export default defineConfig({
   // },
   headScripts: [],
 
-  favicons: ['https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg'],
   plugins: ['@umijs/plugins/dist/antd'],
-  title: '我的摄影',
   routes: routes,
   metas: [
     { name: 'keywords', content: '王东杰,旅游照片,高清照片,照片原图,照片exif' },
@@ -50,7 +49,7 @@ export default defineConfig({
   proxy: {
     '/api': {
       // 接口根路径
-      target: 'http://tolyle.com', // 接口服务器域名
+      target: 'http://118.126.88.185:8090', // 接口服务器域名
       changeOrigin: true, // 开启跨域
       pathRewrite: {
         // 路径重写规则

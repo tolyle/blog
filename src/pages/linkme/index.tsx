@@ -28,16 +28,16 @@ export default () => {
               <div>
                 <img className={css.icon} src={ins} alt="instagram" />
               </div>
-              <div className={css.iconTitle}>EMAIL</div>
-              <div>@bobuuid</div>
+              <div className={css.iconTitle}>Instagram</div>
+              <div>@onmybob</div>
             </div>
 
             <div className={css.iconBorder}>
               <div>
-                <img className={css.icon} src={wechat} alt="wechat" />
+                <img className={css.icon} src={wechat} alt="Wechat" />
               </div>
               <div className={css.iconTitle}>wechat</div>
-              <div>bobuuid</div>
+              <div>bobjoy</div>
             </div>
           </div>
         </div>

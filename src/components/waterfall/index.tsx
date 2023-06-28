@@ -47,7 +47,7 @@ export default () => {
       .then((res: any[]) => {
         res.data.data.forEach((element: any) => {
           element.src = element.url;
-          element.thumbnailCaption = <span style={{ color: '#cbb878', textAlign: 'center', display: 'block', background: '#0e232d', paddingTop: '20px', paddingBottom: '20px' }}>{element.title}</span>;
+          //element.thumbnailCaption = <span style={{ color: '#cbb878', textAlign: 'center', display: 'block', background: '#0e232d', paddingTop: '20px', paddingBottom: '20px' }}>{element.title}</span>;
           element.customOverlay = (
             <div
               style={{
@@ -77,7 +77,7 @@ export default () => {
         setLoading(false);
         setData([...data, ...res.data.data]);
 
-        if (res.length == 0) {
+        if (res.data.data.length == 0) {
           setHasMore(false);
         } else {
           setHasMore(true);
@@ -154,17 +154,18 @@ export default () => {
       <InfiniteScroll
         dataLength={data.length}
         next={loadMoreData}
+        style={{overflow:`hidden`}}
         hasMore={hasMore}
         loader={
           <div className={css.loading}>
             <Spin />
           </div>
         }
-        endMessage={<Divider plain>已经是全部了, 没有更多啦 🤐</Divider>}
+        //endMessage={<Divider plain>已经是全部了, 没有更多啦 🤐</Divider>}
         scrollableTarget="scrollableDiv"
       >
         <div className={css.rowBox}>
-          <Gallery rowHeight={600} margin={0} enableImageSelection={false} images={data} onClick={handleClick2} />
+          <Gallery rowHeight={600} margin={3} enableImageSelection={false} images={data} onClick={handleClick2} />
 
           {/* <PhotoAlbum photos={slides} layout="columns" columns={31} onClick={({ index }) => setIndex(index)} /> */}
         </div>
