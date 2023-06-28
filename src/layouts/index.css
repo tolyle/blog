@@ -1,6 +1,9 @@
 .box {
+  
 }
+ 
 .headerBox {
+  
   height: 120px;
   background-color: #0e232d;
   position: fixed;
@@ -14,6 +17,7 @@
   color: #cbcbcb;
   justify-content: center;
   padding: 0 20px;
+  
 }
 .headerBox a {
   color: #cbcbcb;
@@ -33,6 +37,7 @@
 }
 .fixedPadding {
   height: 90px;
+  background:#0e232d;
 }
 .navLink {
   margin-left: 40px;
@@ -45,4 +50,32 @@
   color: #6f1717;
   background: #173543;
   padding: 8px 50px 11px 50px;
+}
+.mobile{
+  height: 56px;
+  background-color: #0e232d;
+  text-align: center;
+  align-content: center;
+  color: #ddd;
+  font-size: 22px;
+}
+
+ 
+/*  */
+@media screen and (max-width: 414px) {
+  
+  .web {
+    display: none;
+  }
+  .mobile {
+    display:block;
+  }
+ 
+}
+/*web*/
+@media screen and (min-width: 414px) {
+  .mobile {
+    display: none;
+  }
+  
 }
