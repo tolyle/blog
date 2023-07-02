@@ -2,6 +2,7 @@
   background-color: #173543;
   margin: 0px;
 }
+
 .title {
   font-size: 58px;
   font-weight: bold;
@@ -10,11 +11,13 @@
   padding-top: 100px;
   padding-bottom: 200px;
 }
+
+
 body {
   background-color: #0e232d;
- 
+
 }
- 
+
 .icons {
   width: 80%;
   height: 300px;
@@ -22,11 +25,13 @@ body {
   color: #cbcbcb;
   text-align: center;
 }
+
 .icon {
   width: 70px;
   height: 70px;
   margin-bottom: 15px;
 }
+
 .iconTitle {
   margin-bottom: 10px;
 }
@@ -34,4 +39,21 @@ body {
 .iconBorder {
   float: left;
   width: 300px;
+}
+
+
+
+@media all and (max-width: 500px) {
+
+
+  .title {
+    font-size: 48px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .icons {
+    height: 180px;
+  }
+
 }

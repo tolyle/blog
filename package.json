@@ -10,22 +10,23 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
-    "antd": "^5.6.2",
-    "js-file-download": "^0.4.12",
+    "antd": "^5.6.3",
+    "jquery": "^3.7.0",
     "react-grid-gallery": "^1.0.0",
     "react-image-lightbox": "^5.1.4",
     "react-infinite-scroll-component": "^6.1.0",
     "react-photo-album": "^2.2.2",
     "react-photoswipe-gallery": "^2.2.7",
     "serve": "^14.2.0",
-    "umi": "^4.0.71",
+    "umi": "^4.0.72",
     "umi-request": "^1.4.0",
-    "yet-another-react-lightbox": "^3.11.2"
+    "yet-another-react-lightbox": "^3.11.3"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.16",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
-    "@umijs/plugins": "^4.0.71",
+    "@umijs/plugins": "^4.0.72",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "compression-webpack-plugin": "^10.0.0",
     "prettier": "^2.8.8",

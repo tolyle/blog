@@ -9,13 +9,13 @@ const production = process.env.NODE_ENV === 'prod';
 export default defineConfig({
   ...defaultSettings,
   // 打包时移除 console
-  extraBabelPlugins: [production ? 'transform-remove-console' : ''],
+  // extraBabelPlugins: [production ? 'transform-remove-console' : ''],
   //extraBabelPlugins: ['transform-remove-console'],
   //chainWebpack: webpackPlugin,
 
   chainWebpack(config, { env, webpack }) {
-  //   //gzip压缩
-   config.plugin('compression-webpack-plugin').use(new CompressionPlugin({ algorithm: 'gzip', test: new RegExp('\\.(js|css)$'), threshold: 10240, minRatio: 0.6, deleteOriginalAssets: false }));
+    //   //gzip压缩
+    config.plugin('compression-webpack-plugin').use(new CompressionPlugin({ algorithm: 'gzip', test: new RegExp('\\.(js|css)$'), threshold: 10240, minRatio: 0.6, deleteOriginalAssets: false }));
   },
   // chainWebpack: ((config: any) => {
   //   config.plugin('compression-webpack-plugin').use(

@@ -15,13 +15,14 @@ const { Dragger } = Upload;
 export default () => {
   const { CheckableTag } = Tag;
 
-  const tagsData = ['人物', '风景', '扫街', '瞎拍'];
+  const tagsData = ['人像', '风光', '建筑', '城市', '活动', '美食', '宠物'];
 
   const [selectedTags, setSelectedTags] = useState('');
   const inputRef = useRef<InputRef>(null);
   const editInputRef = useRef<InputRef>(null);
   const [inputValue, setInputValue] = useState('');
   const [tags, setTags] = useState(['Unremovable', 'Tag 2', 'Tag 3']);
+  const [percent, setPercent] = useState(1);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -45,6 +46,11 @@ export default () => {
     fileList,
   };
 
+  onUploadProgress: (progressEvent: any) => {
+
+    console.log(progressEvent);
+    console.log(Math.round(progressEvent.loaded / progressEvent.total * 100));
+  }
   const handleUpload = () => {
     console.log('要上传的文件数量' + fileList.length);
 
@@ -118,8 +124,8 @@ export default () => {
   return (
     <div className={css.box}>
       <Form name="basic" form={formInstance} labelCol={{ span: 2 }} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-        <Form.Item label="标题" name="title" rules={[{ required: true, message: '标题不能为空' }]}>
-          <Input />
+        <Form.Item label="标题" name="title"   >
+          <Input value='无标题' />
         </Form.Item>
 
         <Form.Item label="拍摄城市" name="city" rules={[{ required: true, message: '拍摄照片所在城市' }]}>

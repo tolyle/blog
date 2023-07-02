@@ -55,15 +55,12 @@ export default () => {
       title: '序号',
       dataIndex: 'index',
       key: 'index',
+      width: 80,
       render: (text: any, record: any, index: any) => {
         return `${index + 1}`;
       },
     },
-    {
-      title: '标题',
-      dataIndex: 'title',
-      key: 'title',
-    },
+
     {
       title: '城市',
       dataIndex: 'photoCity',
@@ -74,13 +71,12 @@ export default () => {
       title: '景点',
       dataIndex: 'photoTouristSpot',
       key: 'photoTouristSpot',
-      width: 300,
+      width: 150,
     },
     {
       title: 'Tag',
       dataIndex: 'tags',
       key: 'tags',
-      width: 300,
       render: (_: any, record: any) => (
         <Space size="middle">
           <Tag color="#108ee9">{record.tags}</Tag>
@@ -89,7 +85,7 @@ export default () => {
     },
     {
       title: '缩略图',
-      width: 150,
+      width: 130,
       dataIndex: 'photoTouristSpot',
       key: 'photoTouristSpot',
       render: (_: any, record: any) => (
@@ -140,7 +136,7 @@ export default () => {
   return (
     <div className={css.box} style={{ marginTop: '30px' }}>
       <p color="#f50">
-        当前数据库中共有 <span className={[css.tipColor, css.fontBold].join(' ')}>{num}</span> 张照片，<span className={[css.tipColor, css.fontBold].join(' ')}>{num}</span> 条博客信息。
+        当前数据库中共有 <span className={[css.tipColor, css.fontBold].join(' ')}>{num}</span> 张照片。
       </p>
       <Divider />
 

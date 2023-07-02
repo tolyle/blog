@@ -6,6 +6,8 @@ import sc from '../../config/sys';
 import { getToken } from '../lib/token';
 import { clearToken } from '../lib/token';
 
+
+
 /**
  * 对umi-request进行二次封装，主要方便以下二点
  * 1、对request请求封装携带token
@@ -141,5 +143,6 @@ request.interceptors.response.use(async (response: Response | any, options) => {
 
   return response;
 });
+
 
 export default request;
