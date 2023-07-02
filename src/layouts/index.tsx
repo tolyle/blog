@@ -6,7 +6,6 @@ import $ from 'jquery';
 import { Helmet } from 'umi';
 import { useEffect } from 'react'
 
-import { useIntl } from 'umi';
 
 export default function Layout() {
 
@@ -50,13 +49,22 @@ export default function Layout() {
                 <NavLink to="/admin/list" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
                   管理
                 </NavLink>
+
               </div>
+
+
+
+
 
               <div className={sty.headerRight} style={{ display: 'none' }}>
                 <img src={logo} className={sty.logo} />
               </div>
             </div>
+
+
+
           </div>
+
           <div className={sty.fixedPadding}></div>
         </div>
 
@@ -73,6 +81,9 @@ export default function Layout() {
           <li><a href="/about">关于我</a></li>
           <li><a href="/linkme">联系方式</a></li>
         </ul>
+
+
+
 
 
         <Outlet />
