@@ -6,9 +6,10 @@ import $ from 'jquery';
 import { Helmet } from 'umi';
 import { useEffect } from 'react'
 
-
+import { useIntl } from 'umi';
 
 export default function Layout() {
+
   useEffect(() => {
 
     $("#id1").on('click', () => {

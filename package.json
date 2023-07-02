@@ -26,6 +26,7 @@
     "@types/jquery": "^3.5.16",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@umijs/plugin-locale": "^0.10.10",
     "@umijs/plugins": "^4.0.72",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "compression-webpack-plugin": "^10.0.0",
