@@ -15,6 +15,10 @@ jobs:
       # 官方action，将代码拉取到虚拟机
       - name: Checkout  ️ 
         uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+      - name: test
+        run: pnpm i --frozen-lockfile
 
       - name: Install and Build   # 安装依赖、打包，如果提前已打包好无需这一步
         run: |
