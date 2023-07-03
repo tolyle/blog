@@ -23,6 +23,7 @@ jobs:
 
       - name: Install and Build   # 安装依赖、打包，如果提前已打包好无需这一步
         run: |
+          pnpm config set auto-install-peers false
           pnpm install
           pnpm build
 
