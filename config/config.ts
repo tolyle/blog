@@ -35,7 +35,7 @@ export default defineConfig({
   // },
   headScripts: [],
 
-  plugins: ['@umijs/plugins/dist/antd'],
+  // plugins: ['@umijs/plugins/dist/antd'],
   routes: routes,
   metas: [
     { name: 'keywords', content: '王东杰,旅游照片,高清照片,照片原图,照片exif' },
@@ -45,7 +45,11 @@ export default defineConfig({
   antd: {
     dark: false,
   },
-
+  locale: {
+    // 默认使用 src/locales/zh-CN.ts 作为多语言文件
+    default: 'zh-CN',
+    baseSeparator: '-',
+  },
   proxy: {
     '/api': {
       // 接口根路径
