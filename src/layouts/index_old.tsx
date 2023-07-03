@@ -1,31 +1,9 @@
+import sty from './index.css';
+import logo from '@/assets/logo.png';
 import { Select } from 'antd';
 import $ from 'jquery';
-import { Helmet, Outlet, FormattedMessage, setLocale, getLocale, useLocation, history } from 'umi';
+import { Helmet, Outlet, NavLink, FormattedMessage, setLocale, getLocale } from 'umi';
 import { useEffect } from 'react';
-import sty from './index.less';
-
-const menuList = [
-  {
-    name: 'photos',
-    path: '/',
-  },
-  {
-    name: 'about',
-    path: '/about',
-  },
-  {
-    name: 'linkme',
-    path: '/linkme',
-  },
-  {
-    name: 'publish',
-    path: '/photos',
-  },
-  {
-    name: 'management',
-    path: '/admin/list',
-  },
-];
 
 export default function Layout() {
   useEffect(() => {
@@ -35,6 +13,7 @@ export default function Layout() {
 
     // setting default language
     const lang = navigator.language;
+    console.log(lang);
     if (lang === 'zh-CN') {
       setLocale('zh-CN');
     } else {
@@ -42,8 +21,12 @@ export default function Layout() {
     }
   }, []);
 
-  const { pathname } = useLocation();
-
+  function componentDidMount() {
+    console.log('componentDidMount');
+  }
+  const fun1 = function () {
+    alert(1);
+  };
   return (
     <div className="application">
       <Helmet>
@@ -54,23 +37,25 @@ export default function Layout() {
           <div className={sty.headerBox}>
             <div className={sty.headerBoxWrap}>
               <div className={sty.headerLeft}>
-                {menuList.map((item) => (
-                  <ul className={sty.menuLink}>
-                    <li>
-                      <a
-                        className={pathname === item.path ? sty.hasLine : null}
-                        onClick={() => {
-                          history.push(item.path);
-                        }}
-                      >
-                        <FormattedMessage id={item.name} />
-                      </a>
-                    </li>
-                  </ul>
-                ))}
+                <NavLink to="/" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
+                  <FormattedMessage id="photos" />
+                </NavLink>
+                <NavLink to="/about" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
+                  <FormattedMessage id="about" />
+                </NavLink>
+                <NavLink to="/linkme" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
+                  <FormattedMessage id="linkme" />
+                </NavLink>
+                <NavLink to="/photos" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
+                  <FormattedMessage id="publish" />
+                </NavLink>
+                <NavLink to="/admin/list" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
+                  <FormattedMessage id="management" />
+                </NavLink>
               </div>
 
               <div className={sty.headerRight}>
+                <img src={logo} className={sty.logo} style={{ display: 'none' }} />
                 {/* 选择语言功能如果不需要，可以自行删除 */}
                 <Select
                   defaultValue={getLocale()}

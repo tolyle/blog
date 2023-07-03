@@ -1,7 +1,53 @@
-.box {}
+.box {
+}
+
+.menuLink {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline-block;
+    position: relative;
+    margin-right: 20px;
+
+    a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      padding: 8px 16px;
+      opacity: 1;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: -14px;
+        width: 100%;
+        height: 2px;
+        background-color: #dd0031;
+        transform: scaleX(0);
+        transition: transform 0.3s ease-in;
+      }
+    }
+
+    .hasLine {
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
 
 .headerBox {
-
   height: 120px;
   background-color: #0e232d;
   position: fixed;
@@ -15,16 +61,15 @@
   color: #cbcbcb;
   justify-content: center;
   padding: 0 20px;
-
 }
 
 .headerBox a {
   color: #cbcbcb;
 }
 
-.headerBox a:hover {
-  color: #cbb878;
-}
+// .headerBox a:hover {
+//   color: #cbb878;
+// }
 
 .headerBoxWrap {
   width: 100%;
@@ -32,7 +77,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
 }
 
 .headerLeft {
@@ -72,10 +116,8 @@
   font-size: 22px;
 }
 
-
 /*  */
 @media screen and (max-width: 434px) {
-
   .web {
     display: none;
   }
@@ -83,7 +125,6 @@
   .mobile {
     display: block;
   }
-
 }
 
 /*web*/
@@ -91,19 +132,12 @@
   .mobile {
     display: none;
   }
-
 }
 
-
-
-
-@import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css");
-
-
+@import url('//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css');
 
 .menu,
 .menuBar {
-
   display: none;
   position: fixed;
   top: 0;
@@ -127,7 +161,6 @@
 }
 
 .menu li a {
-
   display: block;
   text-indent: -500em;
   height: 4em;
@@ -153,34 +186,33 @@
 }
 
 .menu li a.search:before {
-  content: "\f002";
+  content: '\f002';
 }
 
 .menu li a.archive:before {
-  content: "\f187";
+  content: '\f187';
 }
 
 .menu li a.pencil:before {
-  content: "\f040";
+  content: '\f040';
 }
 
 .menu li a.contact:before {
-  content: "\f003";
+  content: '\f003';
 }
 
 .menu li a.about:before {
-  content: "\f007";
+  content: '\f007';
 }
 
 .menu li a.home:before {
-  content: "\f039";
+  content: '\f039';
 }
 
 .menuBar li a:hover,
 .menu li a:hover,
 .menu li:first-child a {
   color: #fff;
-
 }
 
 .menuBar {
@@ -204,8 +236,6 @@
   border-bottom: 1px solid rgb(6, 30, 39);
   transition: background 0.1s ease-in-out;
   font-size: 18px;
-
-
 }
 
 .menuBar li:first-child a {
@@ -214,7 +244,6 @@
   color: #fff;
   line-height: 5;
 }
-
 
 .para {
   color: #0e232d;
@@ -230,8 +259,6 @@
 }
 
 @media all and (max-width: 500px) {
-
-
   .menu,
   .menuBar {
     display: block;
@@ -272,7 +299,6 @@
 }
 
 @media screen and (max-height: 34em) {
-
   .menu li,
   .menuBar {
     font-size: 70%;
