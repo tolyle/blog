@@ -1,0 +1,100 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@6.7.1/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[0].use[1]!./node_modules/.pnpm/@umijs+bundler-webpack@4.0.72_typescript@4.9.5/node_modules/@umijs/bundler-webpack/compiled/postcss-loader/index.js??ruleSet[1].rules[4].oneOf[0].use[2]!./src/pages/about/index.css?modules ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.box___WWk45 {
+  background-color: #173543;
+  margin: 0px;
+}
+
+body {
+  background-color: #0e232d;
+}
+
+.item___ocPxP {
+  height: 800px;
+  padding-top: 50px;
+
+  text-align: center;
+  color: #cbcbcb;
+}
+
+.item___ocPxP .title___xL5qW {
+  font-size: 24px;
+  margin-top: 50px;
+}
+
+.item___ocPxP .content___JebCM {
+  font-size: 16px;
+  padding: 100px 50px 100px 50px;
+  width: 80%;
+  line-height: 1.9;
+  margin: 0px auto;
+}
+
+.green___Yb08L {
+  color: green;
+}
+
+.tipColor___MdiUy {
+  color: #1677ff;
+}
+
+.fontBold___dlLlw {
+  font-weight: bold;
+}
+
+.bImg___k02iN {
+  background-image: url(./static/me2.e3df47ad.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 434px) {
+
+  .mobile___n2UnJ {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 434px) {
+  .web___ZJZlT {
+    display: none;
+  }
+
+  .mobile___n2UnJ {
+    display: block;
+  }
+
+  .mobileBg___cZNm2 {
+    background-image: url(./static/me2.e3df47ad.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 200px;
+    text-align: center;
+    line-height: 200px;
+    font-size: 32px;
+    color: #ffffff;
+    opacity: 0.6;
+
+
+
+  }
+
+  .mobileTitle___TnhHn {
+    color: #cbcbcb;
+    font-size: 24px;
+    height: 100px;
+    line-height: 100px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .mobileContent___alJw3 {
+    line-height: 30px;
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    color: #cbcbcb;
+  }
+}
