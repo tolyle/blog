@@ -145,7 +145,7 @@ export default function Layout() {
                           </Select.Option>
                           {Array.isArray(selectList) &&
                             selectList.map((item: Record<string, any>) => (
-                              <Select.Option key={item.id} value={item.id}>
+                              <Select.Option key={item.tagName} value={item.tagName}>
                                 <FormattedMessage id={item.tagName} />
                               </Select.Option>
                             ))}
