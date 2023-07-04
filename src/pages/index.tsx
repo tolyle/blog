@@ -1,4 +1,5 @@
 import waterfall from '@/components/waterfall/index';
+import NewWaterFall from '@/components/NewWaterFall';
 
 import { setToken } from '@/lib/token';
 import { IToken } from '@/lib/interface';
@@ -27,7 +28,7 @@ export default () => {
   //   },
   // });
 
-  const view = waterfall();
-
-  return view;
+  // const view = waterfall();
+  // return view;
+  return <NewWaterFall />;
 };

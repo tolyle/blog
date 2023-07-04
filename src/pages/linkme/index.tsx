@@ -1,11 +1,9 @@
 import { Col, Row, Image } from 'antd';
-import { FormattedMessage } from 'umi';
+import { FormattedMessage, Helmet } from 'umi';
 import css from './index.css';
 import email from '@/assets/email.png';
 import ins from '@/assets/instagram.png';
 import wechat from '@/assets/wechat.png';
-
-import { Helmet } from 'umi';
 
 export default () => {
   return (

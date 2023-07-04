@@ -1,4 +1,5 @@
 export default {
+  'site.title': 'Bob Wang Wang Dongjie, who loves technology and visual communication and exciting things, always pursues ideal results in a fresh, innovative and minimalist way.',
   // 导航栏菜单
   photos: 'Photos',
   about: 'About me',
@@ -20,4 +21,12 @@ export default {
   email: 'Email',
   instagram: 'Instagram',
   wechat: 'Wechat',
+
+  // 搜索
+  search: 'Search',
+  all: 'All',
+  街头摄影: 'Street photo',
+  人像: 'Portrait',
+  风景: 'Landscape',
+  商业: 'Commercial',
 };

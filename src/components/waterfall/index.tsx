@@ -91,7 +91,7 @@ export default () => {
     loadMoreData();
   }, []);
 
-  const handleClick = (index: number, item: Image) => { };
+  const handleClick = (index: number, item: Image) => {};
 
   const handleClick2 = (index: number, item: Image) => {
     setIndex(index);
@@ -102,7 +102,6 @@ export default () => {
   // audio.src = sys.SLIDESHOW_MUSIC;
 
   const slides = data.map((obj) => ({
-
     src: obj.url,
     fileName: 'test.jpg',
     id: obj.id,
@@ -132,21 +131,18 @@ export default () => {
 
   const DownloadIcon = createIcon('DownloadIcon', <path d="M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zm-1-4-1.41-1.41L13 12.17V4h-2v8.17L8.41 9.59 7 11l5 5 5-5z" />);
 
-
   function downloadImage(url: string, fileName: string) {
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = fileName;
-        link.target = "_blank";
+        link.target = '_blank';
         link.click();
         window.URL.revokeObjectURL(link.href);
       });
   }
-
-
 
   function DownloadButton() {
     const { currentSlide } = useLightboxState();

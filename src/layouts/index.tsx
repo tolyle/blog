@@ -1,11 +1,86 @@
-import sty from './index.css';
-import logo from '@/assets/logo.png';
-import { Select } from 'antd';
+import { Select, Input } from 'antd';
 import $ from 'jquery';
-import { Helmet, Outlet, NavLink, FormattedMessage, setLocale, getLocale } from 'umi';
+import { useDebounceFn, useSetState } from 'ahooks';
+import { css } from '@emotion/css';
+import { querySelectList } from '@/services/item';
+import { Helmet, Outlet, FormattedMessage, setLocale, getLocale, useLocation, history, useModel } from 'umi';
 import { useEffect } from 'react';
+import sty from './index.less';
+
+const menuList = [
+  {
+    name: 'photos',
+    path: '/',
+  },
+  {
+    name: 'about',
+    path: '/about',
+  },
+  {
+    name: 'linkme',
+    path: '/linkme',
+  },
+  {
+    name: 'publish',
+    path: '/photos',
+  },
+  {
+    name: 'management',
+    path: '/admin/list',
+  },
+];
+
+const cls = css`
+  .ant-select-selection-item {
+    color: #fff !important;
+  }
+  .ant-select-selector {
+    border: 1px solid #14222d !important;
+    background-color: #1e3442 !important;
+  }
+  .ant-select-arrow {
+    color: #fff;
+  }
+  .ant-input-group-addon {
+    border: 1px solid #14222d !important;
+  }
+  .ant-btn.ant-btn-icon-only {
+    transform: translateY(-1px);
+  }
+`;
 
 export default function Layout() {
+  const { loadMoreData } = useModel('item');
+
+  const [state, setState] = useSetState({
+    selectList: [],
+  });
+
+  const { selectList } = state;
+
+  const { pathname } = useLocation();
+
+  // 获取下拉列表
+  const getSelectList = async () => {
+    const res = await querySelectList({});
+    if (res.code === 200) {
+      const { data } = res;
+      setState({
+        selectList: data || [],
+      });
+    }
+  };
+
+  // 防抖搜索
+  const { run } = useDebounceFn(
+    (k: string) => {
+      loadMoreData({ key: k, currentPage: 1, isSearch: true });
+    },
+    {
+      wait: 500,
+    },
+  );
+
   useEffect(() => {
     $('#id1').on('click', () => {
       $('#id2').toggleClass(sty.open);
@@ -13,20 +88,16 @@ export default function Layout() {
 
     // setting default language
     const lang = navigator.language;
-    console.log(lang);
     if (lang === 'zh-CN') {
       setLocale('zh-CN');
     } else {
       setLocale('en-US');
     }
+
+    // get select list
+    getSelectList();
   }, []);
 
-  function componentDidMount() {
-    console.log('componentDidMount');
-  }
-  const fun1 = function () {
-    alert(1);
-  };
   return (
     <div className="application">
       <Helmet>
@@ -37,25 +108,55 @@ export default function Layout() {
           <div className={sty.headerBox}>
             <div className={sty.headerBoxWrap}>
               <div className={sty.headerLeft}>
-                <NavLink to="/" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
-                  <FormattedMessage id="photos" />
-                </NavLink>
-                <NavLink to="/about" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
-                  <FormattedMessage id="about" />
-                </NavLink>
-                <NavLink to="/linkme" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
-                  <FormattedMessage id="linkme" />
-                </NavLink>
-                <NavLink to="/photos" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
-                  <FormattedMessage id="publish" />
-                </NavLink>
-                <NavLink to="/admin/list" className={({ isActive }) => (isActive ? `${sty.navLink} ${sty.navLinkActive}` : sty.navLink)}>
-                  <FormattedMessage id="management" />
-                </NavLink>
+                {menuList.map((item) => (
+                  <ul className={sty.menuLink}>
+                    <li>
+                      <a
+                        className={pathname === item.path ? sty.hasLine : null}
+                        onClick={() => {
+                          history.push(item.path);
+                        }}
+                      >
+                        <FormattedMessage id={item.name} />
+                      </a>
+                    </li>
+                  </ul>
+                ))}
+                <div>
+                  {pathname === '/' && (
+                    <Input.Search
+                      className={cls}
+                      placeholder="搜索"
+                      style={{ borderRadius: 4, marginRight: 24 }}
+                      onChange={(e) => {
+                        run(e.target.value);
+                      }}
+                      allowClear
+                      addonBefore={
+                        <Select
+                          defaultValue="all"
+                          style={{ width: 130 }}
+                          onChange={(v) => {
+                            loadMoreData({ tag: v, currentPage: 1, isSearch: true });
+                          }}
+                        >
+                          <Select.Option key="all" value="all">
+                            <FormattedMessage id="all" />
+                          </Select.Option>
+                          {Array.isArray(selectList) &&
+                            selectList.map((item: Record<string, any>) => (
+                              <Select.Option key={item.id} value={item.id}>
+                                <FormattedMessage id={item.tagName} />
+                              </Select.Option>
+                            ))}
+                        </Select>
+                      }
+                    />
+                  )}
+                </div>
               </div>
 
               <div className={sty.headerRight}>
-                <img src={logo} className={sty.logo} style={{ display: 'none' }} />
                 {/* 选择语言功能如果不需要，可以自行删除 */}
                 <Select
                   defaultValue={getLocale()}
@@ -65,8 +166,12 @@ export default function Layout() {
                     setLocale(v, false);
                   }}
                 >
-                  <Select.Option value="zh-CN">中文</Select.Option>
-                  <Select.Option value="en-US">English</Select.Option>
+                  <Select.Option key="zh-CN" value="zh-CN">
+                    中文
+                  </Select.Option>
+                  <Select.Option key="en-US" value="en-US">
+                    English
+                  </Select.Option>
                 </Select>
               </div>
             </div>
