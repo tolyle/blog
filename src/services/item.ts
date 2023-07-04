@@ -7,8 +7,16 @@ export async function queryItems(page: number) {
   });
 }
 
-export async function queryImageList(page: number) {
-  const response = await request.get(`/index?currentPage=${page}`);
+/**
+ * 获取图片列表
+ * @param params
+ * @returns
+ */
+export async function queryImageList(params: Record<string, any>) {
+  const response = await request(`/index`, {
+    method: 'GET',
+    params,
+  });
   if (response.code === 200) {
     const { data = [], hasNext, total } = response.data || {};
     return {
@@ -22,4 +30,16 @@ export async function queryImageList(page: number) {
     hasNext: false,
     total: 0,
   };
+}
+
+/**
+ * 获取图片列表
+ * @param params
+ * @returns
+ */
+export async function querySelectList(params: Record<string, any>) {
+  return request(`/tags`, {
+    method: 'GET',
+    params,
+  });
 }

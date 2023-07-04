@@ -1,4 +1,5 @@
 export default {
+  'site.title': 'Bob Wang 王东杰 热爱科技与视觉传达和令人兴奋的事情，总是以新鲜、创新和极简的方式追求理想的结果。',
   // 导航栏菜单
   photos: '照片',
   about: '关于我',
@@ -19,4 +20,12 @@ export default {
   email: '邮箱',
   instagram: 'Instagram',
   wechat: '微信',
+
+  // 搜索
+  search: '搜索',
+  all: '全部',
+  街头摄影: '街头摄影',
+  人像: '人像',
+  风景: '风景',
+  商业: '商业',
 };

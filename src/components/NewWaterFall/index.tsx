@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Gallery } from 'react-grid-gallery';
 import { Spin } from 'antd';
-import { queryImageList } from '@/services/item';
 import { click } from '@/services/admin';
 import { useModel } from 'umi';
 import * as utils from '@/lib/utils';
@@ -50,75 +49,62 @@ function DownloadButton() {
 }
 
 function NewWaterFall() {
-  const { imageList, currentPage, curentIndex, hasMore, setState } = useModel('item');
-  const loadMoreData = async () => {
-    const { list, hasNext } = await queryImageList(currentPage);
-    const l = list.map((obj) => ({
-      ...obj,
-      src: obj.url,
-      fileName: 'test.jpg',
-      id: obj.id,
-      title: obj.city + ' / ' + obj.photoTouristSpot,
-      downloadUrl: obj.srcImgURL,
-      downloadFilename: obj.downloadFilename,
-      description: (
-        <div className={styles.lightBoxExif}>
-          <div>
-            <span style={{ width: '210px' }}>拍摄时间：{utils.timeFormat(obj.photoTime, 'yyyy-MM-dd hh:mm')}</span>
-            <span style={{ width: '160px' }}>分辨率：{obj.resolution}</span>
-            <span style={{ width: '110px' }}>大小：{obj.size}M</span>
-            <span style={{ width: '270px' }}>相机品牌：{obj.cameraBrand}</span>
-          </div>
-          <div>
-            <span style={{ width: '100px' }}>光圈：F{obj.AValue}</span>
-            <span style={{ width: '110px' }}>ISO:{obj.isoValue}</span>
-            <span style={{ width: '160px' }}>曝光补偿：{obj.evValue}</span>
-            <span style={{ width: '110px' }}>焦距：{obj.FValue}MM</span>
-            <span style={{ width: '270px' }}>相机镜头：{obj.lens}</span>
+  const { imageList, currentPage, curentIndex, hasMore, loadMoreData, searchParams, setState } = useModel('item');
+
+  const newImageList = imageList.map((obj: Record<string, any>) => ({
+    ...obj,
+    description: (
+      <div className={styles.lightBoxExif}>
+        <div>
+          <span style={{ width: '210px' }}>拍摄时间：{utils.timeFormat(obj.photoTime, 'yyyy-MM-dd hh:mm')}</span>
+          <span style={{ width: '160px' }}>分辨率：{obj.resolution}</span>
+          <span style={{ width: '110px' }}>大小：{obj.size}M</span>
+          <span style={{ width: '270px' }}>相机品牌：{obj.cameraBrand}</span>
+        </div>
+        <div>
+          <span style={{ width: '100px' }}>光圈：F{obj.AValue}</span>
+          <span style={{ width: '110px' }}>ISO:{obj.isoValue}</span>
+          <span style={{ width: '160px' }}>曝光补偿：{obj.evValue}</span>
+          <span style={{ width: '110px' }}>焦距：{obj.FValue}MM</span>
+          <span style={{ width: '270px' }}>相机镜头：{obj.lens}</span>
+        </div>
+      </div>
+    ),
+    customOverlay: (
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.6)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: 40,
+          color: 'white',
+        }}
+      >
+        <div>
+          <div style={{ textAlign: `center` }}>
+            <div>{obj.city}</div>
+            <div style={{ fontSize: 18, marginTop: 15, color: `#b7b7b7` }}>{obj.photoTouristSpot}</div>
           </div>
         </div>
-      ),
-      customOverlay: (
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(0, 0, 0, 0.6)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: 40,
-            color: 'white',
-          }}
-        >
-          <div>
-            <div style={{ textAlign: `center` }}>
-              <div>{obj.city}</div>
-              <div style={{ fontSize: 18, marginTop: 15, color: `#b7b7b7` }}>{obj.photoTouristSpot}</div>
-            </div>
-          </div>
-        </div>
-      ),
-    }));
-    setState({
-      imageList: [...imageList, ...l],
-      currentPage: currentPage + 1,
-      hasMore: hasNext,
-    });
-  };
+      </div>
+    ),
+  }));
 
   useEffect(() => {
-    loadMoreData();
+    loadMoreData({ currentPage });
   }, []);
 
   return (
     <div className={styles.container}>
       <InfiniteScroll
-        dataLength={imageList.length}
-        next={loadMoreData}
+        dataLength={newImageList.length}
+        next={() => loadMoreData({ ...searchParams, currentPage })}
         style={{ overflow: `hidden` }}
         hasMore={hasMore}
         loader={
@@ -132,7 +118,7 @@ function NewWaterFall() {
           rowHeight={600}
           margin={3}
           enableImageSelection={false}
-          images={imageList}
+          images={newImageList}
           onClick={(i: number) => {
             setState({ curentIndex: i });
           }}
@@ -140,13 +126,13 @@ function NewWaterFall() {
       </InfiniteScroll>
 
       <Lightbox
-        slides={imageList}
+        slides={newImageList}
         open={curentIndex >= 0}
         index={curentIndex}
         close={() => setState({ curentIndex: -1 })}
         on={{
           view: (showIndex) => {
-            click(imageList[showIndex.index].id);
+            click(newImageList[showIndex.index].id);
           },
         }}
         // enable optional lightbox plugins

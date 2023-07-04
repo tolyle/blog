@@ -1,6 +1,9 @@
-import { Select } from 'antd';
+import { Select, Input } from 'antd';
 import $ from 'jquery';
-import { Helmet, Outlet, FormattedMessage, setLocale, getLocale, useLocation, history } from 'umi';
+import { useDebounceFn, useSetState } from 'ahooks';
+import { css } from '@emotion/css';
+import { querySelectList } from '@/services/item';
+import { Helmet, Outlet, FormattedMessage, setLocale, getLocale, useLocation, history, useModel } from 'umi';
 import { useEffect } from 'react';
 import sty from './index.less';
 
@@ -27,7 +30,57 @@ const menuList = [
   },
 ];
 
+const cls = css`
+  .ant-select-selection-item {
+    color: #fff !important;
+  }
+  .ant-select-selector {
+    border: 1px solid #14222d !important;
+    background-color: #1e3442 !important;
+  }
+  .ant-select-arrow {
+    color: #fff;
+  }
+  .ant-input-group-addon {
+    border: 1px solid #14222d !important;
+  }
+  .ant-btn.ant-btn-icon-only {
+    transform: translateY(-1px);
+  }
+`;
+
 export default function Layout() {
+  const { loadMoreData } = useModel('item');
+
+  const [state, setState] = useSetState({
+    selectList: [],
+  });
+
+  const { selectList } = state;
+
+  const { pathname } = useLocation();
+
+  // 获取下拉列表
+  const getSelectList = async () => {
+    const res = await querySelectList({});
+    if (res.code === 200) {
+      const { data } = res;
+      setState({
+        selectList: data || [],
+      });
+    }
+  };
+
+  // 防抖搜索
+  const { run } = useDebounceFn(
+    (k: string) => {
+      loadMoreData({ key: k, currentPage: 1, isSearch: true });
+    },
+    {
+      wait: 500,
+    },
+  );
+
   useEffect(() => {
     $('#id1').on('click', () => {
       $('#id2').toggleClass(sty.open);
@@ -40,9 +93,10 @@ export default function Layout() {
     } else {
       setLocale('en-US');
     }
-  }, []);
 
-  const { pathname } = useLocation();
+    // get select list
+    getSelectList();
+  }, []);
 
   return (
     <div className="application">
@@ -68,6 +122,38 @@ export default function Layout() {
                     </li>
                   </ul>
                 ))}
+                <div>
+                  {pathname === '/' && (
+                    <Input.Search
+                      className={cls}
+                      placeholder="搜索"
+                      style={{ borderRadius: 4, marginRight: 24 }}
+                      onChange={(e) => {
+                        run(e.target.value);
+                      }}
+                      allowClear
+                      addonBefore={
+                        <Select
+                          defaultValue="all"
+                          style={{ width: 130 }}
+                          onChange={(v) => {
+                            loadMoreData({ tag: v, currentPage: 1, isSearch: true });
+                          }}
+                        >
+                          <Select.Option key="all" value="all">
+                            <FormattedMessage id="all" />
+                          </Select.Option>
+                          {Array.isArray(selectList) &&
+                            selectList.map((item: Record<string, any>) => (
+                              <Select.Option key={item.id} value={item.id}>
+                                <FormattedMessage id={item.tagName} />
+                              </Select.Option>
+                            ))}
+                        </Select>
+                      }
+                    />
+                  )}
+                </div>
               </div>
 
               <div className={sty.headerRight}>
@@ -80,8 +166,12 @@ export default function Layout() {
                     setLocale(v, false);
                   }}
                 >
-                  <Select.Option value="zh-CN">中文</Select.Option>
-                  <Select.Option value="en-US">English</Select.Option>
+                  <Select.Option key="zh-CN" value="zh-CN">
+                    中文
+                  </Select.Option>
+                  <Select.Option key="en-US" value="en-US">
+                    English
+                  </Select.Option>
                 </Select>
               </div>
             </div>
