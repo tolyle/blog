@@ -33,16 +33,28 @@ const menuList = [
 const cls = css`
   .ant-select-selection-item {
     color: #fff !important;
+    line-height:40px !important;
   }
   .ant-select-selector {
-    border: 1px solid #14222d !important;
+    //border: 1px solid #14222d !important;
     background-color: #1e3442 !important;
+    border-radius:1;
+    height:40px !important;
+    
+    
+   }
+  
+  .ant-input-affix-wrapper{
+    height:40px;
+    border: none !important;
+
   }
   .ant-select-arrow {
     color: #fff;
   }
   .ant-input-group-addon {
     border: 1px solid #14222d !important;
+   
   }
   .ant-btn.ant-btn-icon-only {
     transform: translateY(-1px);
@@ -122,12 +134,12 @@ export default function Layout() {
                     </li>
                   </ul>
                 ))}
-                <div>
+                <div style={{ marginLeft: 200 }}>
                   {pathname === '/' && (
                     <Input.Search
                       className={cls}
                       placeholder="搜索"
-                      style={{ borderRadius: 4, marginRight: 24 }}
+                      style={{ borderRadius: 4, marginRight: 24, width: 520 }}
                       onChange={(e) => {
                         run(e.target.value);
                       }}
@@ -135,7 +147,7 @@ export default function Layout() {
                       addonBefore={
                         <Select
                           defaultValue="all"
-                          style={{ width: 130 }}
+                          style={{ width: 130, }}
                           onChange={(v) => {
                             loadMoreData({ tag: v, currentPage: 1, isSearch: true });
                           }}
@@ -157,7 +169,7 @@ export default function Layout() {
               </div>
 
               <div className={sty.headerRight}>
-                {/* 选择语言功能如果不需要，可以自行删除 */}
+                {/* 选择语言功能如果不需要，可以自行删除 
                 <Select
                   defaultValue={getLocale()}
                   placeholder="选择语言"
@@ -173,6 +185,8 @@ export default function Layout() {
                     English
                   </Select.Option>
                 </Select>
+*/}
+
               </div>
             </div>
           </div>
