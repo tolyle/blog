@@ -51,7 +51,7 @@ export default () => {
     if (isSearch) {
       setState({
         imageList: l,
-        currentPage: currentPage,
+        currentPage: 1,
         hasMore: hasNext,
         searchParams,
       });

@@ -33,28 +33,24 @@ const menuList = [
 const cls = css`
   .ant-select-selection-item {
     color: #fff !important;
-    line-height:40px !important;
+    line-height: 40px !important;
   }
   .ant-select-selector {
     //border: 1px solid #14222d !important;
     background-color: #1e3442 !important;
-    border-radius:1;
-    height:40px !important;
-    
-    
-   }
-  
-  .ant-input-affix-wrapper{
-    height:40px;
-    border: none !important;
+    border-radius: 1;
+    height: 40px !important;
+  }
 
+  .ant-input-affix-wrapper {
+    height: 40px;
+    border: none !important;
   }
   .ant-select-arrow {
     color: #fff;
   }
   .ant-input-group-addon {
     border: 1px solid #14222d !important;
-   
   }
   .ant-btn.ant-btn-icon-only {
     transform: translateY(-1px);
@@ -110,6 +106,14 @@ export default function Layout() {
     getSelectList();
   }, []);
 
+  // 回到顶部
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <div className="application">
       <Helmet>
@@ -140,15 +144,17 @@ export default function Layout() {
                       className={cls}
                       placeholder="搜索"
                       style={{ borderRadius: 4, marginRight: 24, width: 520 }}
-                      onChange={(e) => {
+                      onChange={async (e) => {
+                        scrollToTop();
                         run(e.target.value);
                       }}
                       allowClear
                       addonBefore={
                         <Select
                           defaultValue="all"
-                          style={{ width: 130, }}
+                          style={{ width: 130 }}
                           onChange={(v) => {
+                            scrollToTop();
                             loadMoreData({ tag: v, currentPage: 1, isSearch: true });
                           }}
                         >
@@ -186,7 +192,6 @@ export default function Layout() {
                   </Select.Option>
                 </Select>
 */}
-
               </div>
             </div>
           </div>
